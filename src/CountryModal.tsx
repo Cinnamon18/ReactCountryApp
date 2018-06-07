@@ -7,7 +7,6 @@ import { ICountryModalProps } from "./types";
 import './CountryModal.css';
 import { CSSProperties } from 'react';
 
-
 export class CountryModal extends React.Component<ICountryModalProps, { showModal: boolean }> {
 
     private country: Country;
@@ -34,14 +33,14 @@ export class CountryModal extends React.Component<ICountryModalProps, { showModa
             opacity: .25
         };
 
-        let foregroundStyle: CSSProperties = {
+        /*let foregroundStyle: CSSProperties = {
             position: "absolute",
             top: "30%",
             left: "0px",
             width: "100%",
             height: "100%",
             zIndex: 1
-        };
+        };*/
 
         return (
             <div>
@@ -51,41 +50,70 @@ export class CountryModal extends React.Component<ICountryModalProps, { showModa
                         style={buttonStyle}
                     >
                     </DefaultButton>
-                    <p className="ms-fontSize-xl" style={foregroundStyle}>{this.country.name}</p>
+                    <p className="ms-fontSize-xl ButtonForeground">{this.country.name}</p>
                 </div>
                 <Modal
                     isOpen={this.state.showModal}
                     onDismiss={this._closeModal}
                     isBlocking={false}
-                    containerClassName='ms-modalExample-container'
+                    className="ModalContainer"
                 >
-                    <div className='ms-modalExample-header'>
-                        <span>{this.country.name}</span>
+
+                    <div className="ms-Grid">
+                        <div className="ms-Grid-row" style={{ textAlign: "center" }}>
+                            <div className="ms-Grid-col ms-sm12">
+                                <div style={buttonStyle} className='ModalHeader' />
+                            </div>
+                            <p className="ms-fontSize-xxl ButtonForeground" style={{ top: "10%" }}>{this.country.name}</p>
+                        </div>
+                        {this.makeRow(
+                            "2 character code: " + this.country.alpha2Code,
+                            "3 character code: " + this.country.alpha3Code,
+                            "Alternate spellings: " + this.country.altSpellings.join(", "),
+                            "Area (km^2): " + String(this.country.area)
+                        )}
+                        {this.makeRow(
+                            "Neighboring countries: " + this.country.borders.join(", "),
+                            "Calling codes: " + this.country.callingCodes.join(", "),
+                            "Capital: " + this.country.capital,
+                            "CIOC: " + this.country.cioc
+                        )}
+                        {this.makeRow(
+                            "Currency: " + this.country.currencies,
+                            "Demonym: " + this.country.demonym,
+                            "Gini coefficent: " + String(this.country.gini),
+                            "Languages spoken: " + this.country.languages
+                        )}
+                        {this.makeRow(
+                            "Latitude, longitude: " + this.country.latlng.join(", "),
+                            "Native country name: " + this.country.nativeName,
+                            "Numeric code: " + this.country.numericCode,
+                            "Population: " + String(this.country.population)
+                        )}
+                        {this.makeRow(
+                            "Region: " + this.country.region,
+                            "Subregion: " + this.country.subregion,
+                            "Timezones: " + this.country.timezones.join(", "),
+                            "Top level domain: " + this.country.topLevelDomain.join(", ")
+                        )}
+
                     </div>
-                    <div className='ms-modalExample-body'>
-                        <p>{this.country.alpha2Code +
-                            this.country.alpha3Code +
-                            this.country.altSpellings +
-                            this.country.area +
-                            this.country.borders +
-                            this.country.callingCodes +
-                            this.country.capital +
-                            this.country.cioc +
-                            this.country.currencies +
-                            this.country.demonym +
-                            this.country.flag +
-                            this.country.gini +
-                            this.country.languages +
-                            this.country.latlng +
-                            this.country.nativeName +
-                            this.country.numericCode +
-                            this.country.population +
-                            this.country.region +
-                            this.country.subregion +
-                            this.country.timezones +
-                            this.country.topLevelDomain}</p>
-                    </div>
+
                 </Modal>
+            </div>
+        );
+    }
+
+    private makeRow(content1: String, content2: String, content3: String, content4: String): JSX.Element {
+        return (
+            <div>
+                <br /><br />
+                <div className="ms-Grid-row ModalGridRow">
+                    <div className="ms-Grid-col ms-sm3 ModalBody">{content1}</div>
+                    <div className="ms-Grid-col ms-sm3 ModalBody">{content2}</div>
+                    <div className="ms-Grid-col ms-sm3 ModalBody">{content3}</div>
+                    <div className="ms-Grid-col ms-sm3 ModalBody">{content4}</div>
+                </div>
             </div>
         );
     }

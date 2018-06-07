@@ -10,7 +10,7 @@ export class Country {
     callingCodes: string[];
     capital: string;
     cioc: string;
-    currencies: string[];
+    currencies: string;
     demonym: string;
     flag: string;
     flagImage: HTMLImageElement;
@@ -35,7 +35,7 @@ export class Country {
         callingCodes: string[],
         capital: string,
         cioc: string,
-        currencies: string[],
+        currencies: string,
         demonym: string,
         flag: string,
         gini: number,
@@ -76,25 +76,21 @@ export class Country {
         this.flagImage.src = this.flag;
     }
 
-    public toString(): string {
-        return this.name + ' ' + this.alpha2Code;
-    }
-
     public static SecretCountry(): Country {
         return (new Country(
             "Squidland",
             "SL",
             "SQL",
-            ["PromisedLand", "A Very Real Place"],
+            ["Promised Land", "A Very Real Place"],
             360000000,
             ["Atlantic Ocean", "Pacific Ocean", "Caribbean"],
             ["667"],
             "Atlantis",
             "SQD",
-            ["Barter Economy", "Etherium"],
+            "SquidCoin",
             "Squid",
             "https://upload.wikimedia.org/wikipedia/commons/9/90/Squid_icon_%28Splatoon%29.svg",
-            50,
+            2.7,
             "Squideese",
             [0, 0],
             "Squidland",

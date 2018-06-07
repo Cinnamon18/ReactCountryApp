@@ -4,6 +4,7 @@ import { Country } from "./Country";
 import { CountryModal } from './CountryModal';
 import { ICountryListProps } from "./types";
 import 'office-ui-fabric-react/dist/css/fabric.css';
+import './CountryList.css';
 
 
 export class CountryList extends React.Component<ICountryListProps, { countriesLoaded: boolean }> {
@@ -13,7 +14,8 @@ export class CountryList extends React.Component<ICountryListProps, { countriesL
 
     constructor(props: ICountryListProps) {
         super(props);
-        this.setState({ 'countriesLoaded': false });
+        //This line below feels right, but react complains that the object hasn't been rendered yet
+        //this.setState({ 'countriesLoaded': false });
 
         fetch(props.url)
             .then((response) => {
@@ -34,11 +36,14 @@ export class CountryList extends React.Component<ICountryListProps, { countriesL
                         country.callingCodes,
                         country.capital,
                         country.cioc,
-                        country.currencies,
+                        country.currencies[0].name,
                         country.demonym,
                         country.flag,
                         country.gini,
-                        country.languages,
+                        //that's a readable line of code if I ever saw one. It parses the json, and formats + concats the .name fields together
+                        country.languages.slice(1).reduce((languages: string, currentLanguage: any): string => {
+                            return (languages + currentLanguage.name + ", ")
+                        }, country.languages[0].name + ", ", 1),
                         country.latlng,
                         country.nativeName,
                         country.numericCode,
@@ -59,7 +64,7 @@ export class CountryList extends React.Component<ICountryListProps, { countriesL
 
             let makeRow = (countries: Country[]): JSX.Element => {
                 return (
-                    <div className="ms-Grid-row" key="TODO">
+                    <div className="ms-Grid-row FlagRow" key={countries[0].name}>
                         {countries.map((country: Country) => {
                             return (
                                 <div className={"ms-Grid-col ms-sm" + Math.floor(12 / this.COUNTRIES_PER_ROW)} key={country.name}>
