@@ -14,6 +14,7 @@ class App extends React.Component {
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">Countries of Planet Earth</h1>
+            <h6>The planet that I love and am very much native to</h6>
           </header>
           <br />
           <h2>Click on a country to learn more!</h2>

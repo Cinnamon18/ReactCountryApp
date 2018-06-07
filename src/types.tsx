@@ -1,8 +1,10 @@
-interface ICountryListProps {
+/* tslint:disable */
+import { Country } from "./Country";
+
+export interface ICountryListProps {
     url: string;
   }
 
-  interface ICountryModalProps {
-    contentsTitle: string;
-    contentsBody: string;
+export interface ICountryModalProps {
+    country: Country;
   }
