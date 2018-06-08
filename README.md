@@ -3,9 +3,9 @@ A react app that displays countries and basic infornmation about them
 
 # Build Instructions
 Assuming you have npm and react installed:
-Download ReactCountryApp, navigate to its root
+..*Download ReactCountryApp, navigate to its root
 
 Install Create React App:
-npm install -g create-react-app
-npm start
+1. npm install -g create-react-app
+2. npm start
 
