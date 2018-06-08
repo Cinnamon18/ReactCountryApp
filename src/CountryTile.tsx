@@ -4,15 +4,15 @@ import { Modal } from 'office-ui-fabric-react/lib/Modal';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import { Country } from "./Country";
 import { Clock } from "./Clock";
-import { ICountryModalProps } from "./types";
-import './CountryModal.css';
+import { ICountryTileProps } from "./types";
+import './CountryTile.css';
 import { CSSProperties } from 'react';
 
-export class CountryModal extends React.Component<ICountryModalProps, { showModal: boolean }> {
+export class CountryTile extends React.Component<ICountryTileProps, { showModal: boolean }> {
 
     private country: Country;
 
-    constructor(props: ICountryModalProps) {
+    constructor(props: ICountryTileProps) {
         super(props);
         this.state = {
             showModal: false

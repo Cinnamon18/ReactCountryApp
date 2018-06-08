@@ -2,6 +2,8 @@
 
 import { IClockProps, IClockState } from "./types";
 import * as React from 'react';
+import * as moment from 'moment';
+
 
 export class Clock extends React.Component<IClockProps, IClockState> {
 
@@ -12,12 +14,18 @@ export class Clock extends React.Component<IClockProps, IClockState> {
     constructor(props: IClockProps) {
         super(props);
         this.timeZones = props.timeZone;
+
+
+        let now = moment().format('LLLL');
+        now;
+
+
         this.localToThisComputer = new Date();
         this.state = {
-            localTime: new Date(Date.UTC(this.localToThisComputer.getFullYear(), this.localToThisComputer.getMonth()))
+            localTime: Clock.nowUTC(this.localToThisComputer)
         };
 
-        //Temp, until I decide which time zone to display
+        //Temp, until I decide how to decide which time zone to display
         let timeZone: string = this.timeZones[0];
         //I'd forgotten what a pain working with timezones is. Parse the JSON timezone, convert it to js usable
         if (timeZone === "UTC") {
@@ -47,24 +55,10 @@ export class Clock extends React.Component<IClockProps, IClockState> {
         );
     }
 
-    componentWillUnmount() {
-        //Stop the ticking when we close the modal
-        clearInterval();
-        //TODO: Figure out why this line fixes stuff. it shouldn't; timezonedifference isn't static? but it seems to act like it?
-        this.timeZoneDifference = 0;
-    }
-
     private updateState(): void {
         this.localToThisComputer = new Date();
         this.setState({
-            localTime: new Date(Date.UTC(
-                this.localToThisComputer.getFullYear(),
-                this.localToThisComputer.getMonth(),
-                this.localToThisComputer.getDate(),
-                this.localToThisComputer.getHours(),
-                this.localToThisComputer.getMinutes(),
-                this.localToThisComputer.getSeconds(),
-            ))
+            localTime: Clock.nowUTC(this.localToThisComputer)
         });
     }
 
@@ -78,6 +72,17 @@ export class Clock extends React.Component<IClockProps, IClockState> {
                     ":" + this.state.localTime.getSeconds()}
             </p>
         );
+    }
+
+    private static nowUTC(localToThisComputer: Date): Date {
+        return new Date(Date.UTC(
+            localToThisComputer.getFullYear(),
+            localToThisComputer.getMonth(),
+            localToThisComputer.getDate(),
+            localToThisComputer.getHours(),
+            localToThisComputer.getMinutes(),
+            localToThisComputer.getSeconds(),
+        ));
     }
 
 }

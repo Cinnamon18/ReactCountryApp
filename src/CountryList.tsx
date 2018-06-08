@@ -1,7 +1,7 @@
 /* tslint:disable */
 import * as React from 'react';
 import { Country } from "./Country";
-import { CountryModal } from './CountryModal';
+import { CountryTile } from './CountryTile';
 import { ICountryListProps } from "./types";
 import 'office-ui-fabric-react/dist/css/fabric.css';
 import './CountryList.css';
@@ -65,55 +65,55 @@ export class CountryList extends React.Component<ICountryListProps, { countriesL
 
     public render(): JSX.Element {
         if (this.state != null && this.state.countriesLoaded) {
-
-            let makeRow = (countries: Country[]): JSX.Element => {
-                return (
-                    <div className="ms-Grid-row FlagRow" key={countries[0].name}>
-                        {countries.map((country: Country) => {
-                            return (
-                                <div className={"ms-Grid-col ms-sm" + Math.floor(12 / this.COUNTRIES_PER_ROW)} key={country.name}>
-                                    {CountryList.createCountryModal(country)}
-                                    <br />
-                                </div>
-                            );
-                        })}
-                    </div>
-                );
-            }
-
-            let makeGrid = (countries: Country[], countriesPerRow: number): JSX.Element => {
-                let countryRowsArr: Country[][] = CountryList.make2DArray(Math.floor(countries.length / countriesPerRow), countriesPerRow);
-
-                for (let x = 0; x < Math.floor(countries.length / countriesPerRow); x++) {
-                    for (let y = 0; y < countriesPerRow; y++) {
-                        //Just to catch the out of bounds that might happen at the very end
-                        if (x * countriesPerRow + y < countries.length) {
-                            countryRowsArr[x][y] = countries[(x * countriesPerRow) + y];
-                        }
-                    }
-                }
-
-                return (
-                    <div className="ms-Grid">
-                        {countryRowsArr.map((countryRow: Country[]) => {
-                            return (
-                                makeRow(countryRow)
-                            );
-                        })}
-                    </div>
-                );
-            }
-
-            return (<div> {makeGrid(this.countries, this.COUNTRIES_PER_ROW)} </div>);
+            return (<div> {this.makeGrid(this.countries, this.COUNTRIES_PER_ROW)} </div>);
         } else {
             return (<p>Loading countries...</p>);
         }
     }
 
-    private static createCountryModal(country: Country): JSX.Element {
+    private makeGrid (countries: Country[], countriesPerRow: number): JSX.Element {
+        let countryRowsArr: Country[][] = CountryList.make2DArray(Math.floor(countries.length / countriesPerRow), countriesPerRow);
+
+        for (let x = 0; x < Math.floor(countries.length / countriesPerRow); x++) {
+            for (let y = 0; y < countriesPerRow; y++) {
+                //Just to catch the out of bounds that might happen at the very end
+                if (x * countriesPerRow + y < countries.length) {
+                    countryRowsArr[x][y] = countries[(x * countriesPerRow) + y];
+                }
+            }
+        }
+
+        return (
+            <div className="ms-Grid">
+                {countryRowsArr.map((countryRow: Country[]) => {
+                    return (
+                        this.makeRow(countryRow)
+                    );
+                })}
+            </div>
+        );
+
+    }
+
+    private makeRow(countries: Country[]): JSX.Element {
+        return (
+            <div className="ms-Grid-row FlagRow" key={countries[0].name}>
+                {countries.map((country: Country) => {
+                    return (
+                        <div className={"ms-Grid-col ms-sm" + Math.floor(12 / this.COUNTRIES_PER_ROW)} key={country.name}>
+                            {CountryList.createCountryTile(country)}
+                            <br />
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    }
+
+    private static createCountryTile(country: Country): JSX.Element {
         return (
             <div>
-                <CountryModal country={country} />
+                <CountryTile country={country} />
             </div>
         );
     }

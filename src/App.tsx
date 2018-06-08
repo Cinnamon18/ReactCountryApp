@@ -4,7 +4,7 @@ import './App.css';
 import { CountryList } from "./CountryList";
 import { Fabric } from 'office-ui-fabric-react/lib/Fabric';
 import logo from './logoBetter.svg';
-//import { CountryModal } from './CountryModal';
+//import { CountryTile } from './CountryTile';
 
 class App extends React.Component {
   public render() {

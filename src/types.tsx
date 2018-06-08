@@ -5,7 +5,7 @@ export interface ICountryListProps {
     url: string;
   }
 
-export interface ICountryModalProps {
+export interface ICountryTileProps {
     country: Country;
   }
 
