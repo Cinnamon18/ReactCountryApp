@@ -75,8 +75,15 @@ export class Country {
         this.topLevelDomain = topLevelDomain;
 
         if (this.borders.length == 0) {
-            this.borders[0] = "No bordering countries";
+            this.borders[0] = "None (It's an island)";
         }
+        if (this.cioc == null || this.cioc.length == 0) {
+            this.cioc = "No CIOC";
+        }
+        if (this.gini == null) {
+            this.gini = 0;
+        }
+        
     }
 
     public static SecretCountry(): Country {

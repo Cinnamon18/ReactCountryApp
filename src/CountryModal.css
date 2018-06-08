@@ -1,5 +1,5 @@
 .ModalContainer {
-    margin: auto;
+    margin: 0 auto;
 }
 
 .ModalBody{
@@ -10,6 +10,11 @@
 .ModalBody p {
     margin: auto;
     margin-top: 20px;
+    text-align: left;
+}
+
+.HeaderClock {
+    text-align: center;
 }
 
 .ModalGridRow {

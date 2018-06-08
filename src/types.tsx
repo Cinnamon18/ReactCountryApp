@@ -8,3 +8,7 @@ export interface ICountryListProps {
 export interface ICountryModalProps {
     country: Country;
   }
+
+  export interface IClockProps {
+    timeZone: string[];
+  }

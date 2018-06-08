@@ -39,8 +39,8 @@ export class CountryList extends React.Component<ICountryListProps, { countriesL
                         //that's a readable line of code if I ever saw one. It parses the json, and formats + concats the .name fields together
                         //It's complicated by the whole "the last element can't have a comma after it" deal
                         country.currencies.slice(1).reduce((languages: string, currentLanguage: any): string => {
-                            return (languages + ", " + currentLanguage.name + " (" + currentLanguage.symbol + ")")
-                        }, country.currencies[0].name + " (" + country.currencies[0].symbol + ")"),
+                            return (languages + ", " + currentLanguage.name)
+                        }, country.currencies[0].name),
                         country.demonym,
                         country.flag,
                         country.gini,

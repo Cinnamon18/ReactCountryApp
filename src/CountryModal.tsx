@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Modal } from 'office-ui-fabric-react/lib/Modal';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
 import { Country } from "./Country";
+import { Clock } from "./Clock";
 import { ICountryModalProps } from "./types";
 import './CountryModal.css';
 import { CSSProperties } from 'react';
@@ -65,6 +66,9 @@ export class CountryModal extends React.Component<ICountryModalProps, { showModa
                                 <div style={buttonStyle} className='ModalHeader' />
                             </div>
                             <p className="ms-fontSize-xxl ButtonForeground" style={{ top: "10%" }}>{this.country.name}</p>
+                        </div>
+                        <div className="HeaderClock">
+                            <Clock timeZone={this.country.timezones} />
                         </div>
                         {this.makeRow(
                             "2 character code: " + this.country.alpha2Code,
