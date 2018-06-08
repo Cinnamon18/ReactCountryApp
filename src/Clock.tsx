@@ -50,6 +50,7 @@ export class Clock extends React.Component<IClockProps, IClockState> {
     componentWillUnmount() {
         //Stop the ticking when we close the modal
         clearInterval();
+        //TODO: Figure out why this line fixes stuff. it shouldn't; timezonedifference isn't static? but it seems to act like it?
         this.timeZoneDifference = 0;
     }
 
