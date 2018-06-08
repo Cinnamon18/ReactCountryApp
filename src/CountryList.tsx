@@ -36,14 +36,18 @@ export class CountryList extends React.Component<ICountryListProps, { countriesL
                         country.callingCodes,
                         country.capital,
                         country.cioc,
-                        country.currencies[0].name,
+                        //that's a readable line of code if I ever saw one. It parses the json, and formats + concats the .name fields together
+                        //It's complicated by the whole "the last element can't have a comma after it" deal
+                        country.currencies.slice(1).reduce((languages: string, currentLanguage: any): string => {
+                            return (languages + ", " + currentLanguage.name + " (" + currentLanguage.symbol + ")")
+                        }, country.currencies[0].name + " (" + country.currencies[0].symbol + ")"),
                         country.demonym,
                         country.flag,
                         country.gini,
-                        //that's a readable line of code if I ever saw one. It parses the json, and formats + concats the .name fields together
+                        //Same as above oops
                         country.languages.slice(1).reduce((languages: string, currentLanguage: any): string => {
-                            return (languages + currentLanguage.name + ", ")
-                        }, country.languages[0].name + ", ", 1),
+                            return (languages + ", " + currentLanguage.name)
+                        }, country.languages[0].name),
                         country.latlng,
                         country.nativeName,
                         country.numericCode,
@@ -115,6 +119,7 @@ export class CountryList extends React.Component<ICountryListProps, { countriesL
     }
 
     private static make2DArray<T>(x: number, y: number): T[][] {
+        //I... feel like there should be a better way to do this. .fill(Array<T>(y)) doesn't work unfortunately
         let arr: T[][] = new Array<T[]>(x);
         for (let i = 0; i < x; i++) {
             arr[i] = (new Array<T>(y));

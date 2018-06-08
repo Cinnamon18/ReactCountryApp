@@ -1,5 +1,7 @@
 /* tslint:disable */
 
+//I definitely wonder if there's a more efficent way to go through each property than listing them out by hand like this
+
 export class Country {
     name: string;
     alpha2Code: string;
@@ -72,8 +74,9 @@ export class Country {
         this.timezones = timezones;
         this.topLevelDomain = topLevelDomain;
 
-        this.flagImage = new Image(300, 200);
-        this.flagImage.src = this.flag;
+        if (this.borders.length == 0) {
+            this.borders[0] = "No bordering countries";
+        }
     }
 
     public static SecretCountry(): Country {
@@ -87,11 +90,11 @@ export class Country {
             ["667"],
             "Atlantis",
             "SQD",
-            "SquidCoin",
+            "Barter Economy, SquidCoin",
             "Squid",
             "https://upload.wikimedia.org/wikipedia/commons/9/90/Squid_icon_%28Splatoon%29.svg",
             2.7,
-            "Squideese",
+            "Squideese, Esparanto, Common",
             [0, 0],
             "Squidland",
             "667",
