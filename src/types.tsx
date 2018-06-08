@@ -12,3 +12,7 @@ export interface ICountryModalProps {
   export interface IClockProps {
     timeZone: string[];
   }
+
+  export interface IClockState {
+    localTime: Date;
+  }

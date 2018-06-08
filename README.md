@@ -8,3 +8,4 @@ A react app that displays countries and basic infornmation about them
 4. Navigate to its root: `cd ReactCountryApp`
 5. Run the test server: `npm start`
 
+The project should appear in your browser. If not, navigate to `localhost:3000` to view it
