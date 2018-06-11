@@ -20,7 +20,6 @@ export class CountryTile extends React.Component<ICountryTileProps, { showModal:
         this.country = props.country;
     }
 
-
     public render(): JSX.Element {
         let buttonStyle: CSSProperties = {
             backgroundImage: 'url(' + this.country.flag + ')',
@@ -59,7 +58,6 @@ export class CountryTile extends React.Component<ICountryTileProps, { showModal:
                     isBlocking={false}
                     className="ModalContainer"
                 >
-
                     <div className="ms-Grid">
                         <div className="ms-Grid-row" style={{ textAlign: "center" }}>
                             <div className="ms-Grid-col ms-sm12">
@@ -83,10 +81,10 @@ export class CountryTile extends React.Component<ICountryTileProps, { showModal:
                             "CIOC: " + this.country.cioc
                         )}
                         {this.makeRow(
-                            "Currency: " + this.country.currencies,
+                            "Currency: " + this.country.currencies.join(", "),
                             "Demonym: " + this.country.demonym,
                             "Gini coefficent: " + String(this.country.gini),
-                            "Languages spoken: " + this.country.languages
+                            "Languages spoken: " + this.country.languages.join(", ")
                         )}
                         {this.makeRow(
                             "Latitude, longitude: " + this.country.latlng.join(", "),

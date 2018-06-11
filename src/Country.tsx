@@ -10,12 +10,12 @@ export class Country {
     public callingCodes: string[];
     public capital: string;
     public cioc: string;
-    public currencies: string;
+    public currencies: string[];
     public demonym: string;
     public flag: string;
     public flagImage: HTMLImageElement;
     public gini: number;
-    public languages: string;
+    public languages: string[];
     public latlng: number[];
     public nativeName: string;
     public numericCode: string;
@@ -35,11 +35,11 @@ export class Country {
         callingCodes: string[],
         capital: string,
         cioc: string,
-        currencies: string,
+        currencies: string[],
         demonym: string,
         flag: string,
         gini: number,
-        languages: string,
+        languages: string[],
         latlng: number[],
         nativeName: string,
         numericCode: string,
@@ -95,11 +95,11 @@ export class Country {
             ["667"],
             "Atlantis",
             "SQD",
-            "Barter Economy, SquidCoin",
+            ["Barter Economy", "SquidCoin"],
             "Squid",
             "https://upload.wikimedia.org/wikipedia/commons/9/90/Squid_icon_%28Splatoon%29.svg",
             2.7,
-            "Squideese, Esparanto, Common",
+            ["Squideese", "Esparanto", "Common"],
             [0, 0],
             "Squidland",
             "667",
@@ -108,6 +108,7 @@ export class Country {
             "Varries",
             ["UTC+00:00"],
             [".sq"]
+
         ))
     }
 }

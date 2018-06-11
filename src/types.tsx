@@ -1,4 +1,5 @@
 /* tslint:disable */
+import * as moment from 'moment';
 import { Country } from "./Country";
 
 export interface ICountryListProps {
@@ -14,5 +15,5 @@ export interface ICountryTileProps {
   }
 
   export interface IClockState {
-    localTime: Date;
+    localTime: moment.Moment;
   }

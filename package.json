@@ -5,6 +5,7 @@
   "dependencies": {
     "@reactivex/rxjs": "^6.2.0",
     "@types/prop-types": "^15.5.3",
+    "@types/underscore": "^1.8.8",
     "moment": "^2.22.2",
     "office-ui-fabric-react": "^6.5.0",
     "react": "^16.4.0",

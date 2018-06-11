@@ -5,24 +5,33 @@ import { CountryTile } from './CountryTile';
 import { ICountryListProps } from "./types";
 import 'office-ui-fabric-react/dist/css/fabric.css';
 import './CountryList.css';
-
+import { ProgressIndicator } from 'office-ui-fabric-react/lib/ProgressIndicator';
+import * as _ from 'node_modules/underscore';
+import { Clock } from './Clock';
+//var _ = require('underscore');
 
 export class CountryList extends React.Component<ICountryListProps, { countriesLoaded: boolean }> {
 
     private countries: Country[];
     private readonly COUNTRIES_PER_ROW: number = 4;
+    //Delay to retry the API query if it fails
+    private fetchRetryDelay: number = 5000;
+    private fetchURL: string;
 
     constructor(props: ICountryListProps) {
         super(props);
-        //This line below feels right, but react complains that the object hasn't been rendered yet
-        //this.setState({ 'countriesLoaded': false });
+        this.fetchURL = props.url;
+        this.state = { 'countriesLoaded': false };
+        this.fetchData(this.fetchURL);
+    }
 
-        fetch(props.url)
+    private fetchData(url: string): void {
+        fetch(url)
             .then((response) => {
                 return response.json();
             })
             .then((myJson) => {
-                //Turns out myJson is an array not a json object -_-
+                //Construct the country objects from the queried data
                 this.countries = new Array();
                 this.countries.push(Country.SecretCountry());
                 for (let country of myJson) {
@@ -36,52 +45,56 @@ export class CountryList extends React.Component<ICountryListProps, { countriesL
                         country.callingCodes,
                         country.capital,
                         country.cioc,
-                        //that's a readable line of code if I ever saw one. It parses the json, and formats + concats the .name fields together
-                        //It's complicated by the whole "the last element can't have a comma after it" deal
-                        country.currencies.slice(1).reduce((languages: string, currentLanguage: any): string => {
-                            return (languages + ", " + currentLanguage.name)
-                        }, country.currencies[0].name),
+                        _.pluck(country.currencies, 'name') as Array<string>,
                         country.demonym,
                         country.flag,
                         country.gini,
-                        //Same as above oops
-                        country.languages.slice(1).reduce((languages: string, currentLanguage: any): string => {
-                            return (languages + ", " + currentLanguage.name)
-                        }, country.languages[0].name),
+                        _.pluck(country.languages, 'name') as Array<string>,
                         country.latlng,
                         country.nativeName,
                         country.numericCode,
                         country.population,
                         country.region,
                         country.subregion,
-                        country.timezones,
+                        _.sortBy(country.timezones, (timeZone: string) => { return Clock.timeZoneToMinutes(timeZone); }),
                         country.topLevelDomain
                     ));
                 }
-                console.log(this.countries);
                 this.setState({ 'countriesLoaded': true });
             });
     }
 
     public render(): JSX.Element {
         if (this.state != null && this.state.countriesLoaded) {
+            //Success!
+            //return (<Grid items={this.countries}/>);
+            //return (<div className="ms-Grid" items={this.countries}/>);
             return (<div> {this.makeGrid(this.countries, this.COUNTRIES_PER_ROW)} </div>);
         } else {
-            return (<p>Loading countries...</p>);
+            //Retry until the heat death of the universe
+            setInterval(
+                () => {
+                    this.fetchData(this.fetchURL);
+                },
+                this.fetchRetryDelay
+            );
+            return (<ProgressIndicator label="Loading countries..." description="They're probably loading I promise" />);
         }
     }
 
-    private makeGrid (countries: Country[], countriesPerRow: number): JSX.Element {
+    private makeGrid(countries: Country[], countriesPerRow: number): JSX.Element {
         let countryRowsArr: Country[][] = CountryList.make2DArray(Math.floor(countries.length / countriesPerRow), countriesPerRow);
 
-        for (let x = 0; x < Math.floor(countries.length / countriesPerRow); x++) {
+        /*for (let x = 0; x < Math.floor(countries.length / countriesPerRow); x++) {
             for (let y = 0; y < countriesPerRow; y++) {
                 //Just to catch the out of bounds that might happen at the very end
                 if (x * countriesPerRow + y < countries.length) {
                     countryRowsArr[x][y] = countries[(x * countriesPerRow) + y];
                 }
             }
-        }
+        }*/
+        //All that! Refactored into one line! These libraries are wild.
+        countryRowsArr = _.chunk(countries, 4);
 
         return (
             <div className="ms-Grid">
