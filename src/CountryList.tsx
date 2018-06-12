@@ -17,12 +17,14 @@ export class CountryList extends React.Component<ICountryListProps, { countriesL
     //Delay to retry the API query if it fails
     private fetchRetryDelay: number = 5000;
     private fetchURL: string;
+    private retryingFetch: boolean;
 
     constructor(props: ICountryListProps) {
         super(props);
         this.fetchURL = props.url;
         this.state = { 'countriesLoaded': false };
         this.fetchData(this.fetchURL);
+        this.retryingFetch = false;
     }
 
     private fetchData(url: string): void {
@@ -62,6 +64,7 @@ export class CountryList extends React.Component<ICountryListProps, { countriesL
                 }
                 this.setState({ 'countriesLoaded': true });
             });
+            this.retryingFetch = false;
     }
 
     public render(): JSX.Element {
@@ -72,12 +75,15 @@ export class CountryList extends React.Component<ICountryListProps, { countriesL
             return (<div> {this.makeGrid(this.countries, this.COUNTRIES_PER_ROW)} </div>);
         } else {
             //Retry until the heat death of the universe
-            setInterval(
-                () => {
-                    this.fetchData(this.fetchURL);
-                },
-                this.fetchRetryDelay
-            );
+            if (!this.retryingFetch) {
+                this.retryingFetch = true;
+                setInterval(
+                    () => {
+                        this.fetchData(this.fetchURL);
+                    },
+                    this.fetchRetryDelay
+                );
+            }
             return (<ProgressIndicator label="Loading countries..." description="They're probably loading I promise" />);
         }
     }
@@ -94,7 +100,7 @@ export class CountryList extends React.Component<ICountryListProps, { countriesL
             }
         }*/
         //All that! Refactored into one line! These libraries are wild.
-        countryRowsArr = _.chunk(countries, 4);
+        countryRowsArr = _.chunk(countries, 4) as Array<Array<Country>>;
 
         return (
             <div className="ms-Grid">

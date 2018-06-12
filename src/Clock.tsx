@@ -10,11 +10,15 @@ export class Clock extends React.Component<IClockProps, IClockState> {
     private timeZones: string[];
     private timeZoneDifference: number;
     private localTimeInCountry: moment.Moment;
+    private timer: number;
 
     constructor(props: IClockProps) {
         super(props);
         this.timeZones = props.timeZone;
+        this.localTimeInCountry = moment.utc();
+    }
 
+    componentwillMount() {
         this.localTimeInCountry = moment.utc();
 
         //Pick a timezone around the middle
@@ -27,7 +31,10 @@ export class Clock extends React.Component<IClockProps, IClockState> {
 
         this.localTimeInCountry.add(this.timeZoneDifference, 'm');
         this.state = { localTime: this.localTimeInCountry };
+    }
 
+    componentWillUnmount() {
+        clearInterval(this.timer);
     }
 
     public static timeZoneToMinutes(timeZone: string): number {

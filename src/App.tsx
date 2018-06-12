@@ -21,7 +21,6 @@ class App extends React.Component {
           <br />
           <CountryList url='https://restcountries.eu/rest/v2/all' />
           <br />
-
         </div>
       </Fabric>
     );
