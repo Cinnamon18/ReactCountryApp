@@ -62,8 +62,8 @@ export class CountryTile extends React.Component<ICountryTileProps, { showModal:
                         <div className="ms-Grid-row" style={{ textAlign: "center" }}>
                             <div className="ms-Grid-col ms-sm12">
                                 <div style={buttonStyle} className='ModalHeader' />
+                                <p className="ms-fontSize-xxl ButtonForeground" style={{ top: "26%" }}>{this.country.name}</p>
                             </div>
-                            <p className="ms-fontSize-xxl ButtonForeground" style={{ top: "8%" }}>{this.country.name}</p>
                         </div>
                         <div className="HeaderClock">
                             <Clock timeZone={this.country.timezones} />
